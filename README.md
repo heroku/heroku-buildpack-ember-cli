@@ -34,3 +34,6 @@ fingerprint: {
   prepend: 'THISISAPLACEHOLDERFORTHECDNHOSTVALUE'
 }
 ```
+
+## Example
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/jmonster/heroku-buildpack-ember-cli-env)
