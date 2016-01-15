@@ -1,0 +1,1 @@
+web: ./bin/rewrite-index-meta && ./bin/set-cdn-prefix && bin/boot
