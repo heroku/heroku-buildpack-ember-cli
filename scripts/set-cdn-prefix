@@ -6,7 +6,7 @@ var pathToDist = Path.resolve(__dirname, '../dist');
 
 Replace({
   regex: 'THISISAPLACEHOLDERFORTHECDNHOSTVALUE',
-  replacement: process.env.CDN_HOST,
+  replacement: process.env.CDN_HOST || '',
   paths: [pathToDist],
   recursive: true,
   silent: true
