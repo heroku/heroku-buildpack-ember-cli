@@ -21,6 +21,14 @@ heroku buildpacks:add https://github.com/hone/heroku-buildpack-static
 heroku buildpacks:add https://github.com/jmonster/heroku-buildpack-ember-cli-env
 ```
 
+By default, the nodejs buildpack only installed `dependencies` and not `devDependencies`. And by default, Ember CLI puts everything in `devDependencies`. Doh! Fortunately, there's a simple fix:
+
+```
+heroku config:set NPM_CONFIG_PRODUCTION=false
+```
+
+Be sure to run this _before_ deploying. And add it to your `app.json` if you're using Pipelines/Heroku Button/etc.
+
 ## static.json
 This buildpack injects a default [static.json](https://github.com/hone/heroku-buildpack-static#configuration) file into the application slug *unless one is provided by your application*. **Warning** The provided `static.json` sets cache headers on `/assets/**` which is only desirable _if_ you are leveraging [fingerprinting](http://ember-cli.com/asset-compilation/#fingerprinting-and-cdn-urls) in your project!
 
