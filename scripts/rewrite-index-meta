@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+var Path = require('path');
+var Fs = require('fs');
+
+// REWRITE INDEX.HTML META TAG //////////////////
+var pathToIndexFile = Path.resolve(__dirname,'../dist/index.html');
+
+// load the index.html file
+var indexDotHtml = Fs.readFileSync(pathToIndexFile).toString();
+
+// load our Ember configuration for the current ENV
+var EmberConfigurator = require(Path.resolve(__dirname,'../config/environment'));
+var config = EmberConfigurator(process.env.NODE_ENV || 'development');
+
+// recreate the ember-cli meta tag
+var contentValue = encodeURIComponent(JSON.stringify(config));
+var newMetaTag = `<meta name="${config.modulePrefix}/config/environment" content="${contentValue}" />`;
+
+// replace the meta tag that was created at Build time with the meta tag created at server start time
+var regexStr = `<meta name="${config.modulePrefix}/config/environment" content="\\S*" />`;
+var regex = new RegExp(regexStr);
+indexDotHtml = indexDotHtml.replace(regex, newMetaTag);
+
+// persist the updated index.html file
+Fs.writeFileSync(pathToIndexFile, indexDotHtml);

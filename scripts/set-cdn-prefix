@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var Replace = require('replace');
+var Path = require('path');
+var pathToDist = Path.resolve(__dirname, '../dist');
+
+Replace({
+  regex: 'THISISAPLACEHOLDERFORTHECDNHOSTVALUE',
+  replacement: process.env.CDN_HOST,
+  paths: [pathToDist],
+  recursive: true,
+  silent: true
+});

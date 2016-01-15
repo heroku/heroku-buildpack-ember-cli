@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+# rewrite-index-meta
+#
+# rewrite the `meta` tag in index.html to account for current ENV values
+
+# set-cdn-prefix
+#
+# rewrite the CDN prefix to account for current ENV values
+
+# bin/boot
+#
+# file exposed by https://github.com/hone/heroku-buildpack-static
+# which starts the nginx server
+
+cat <<EOF
+---
+default_process_types:
+  web: ./bin/rewrite-index-meta && ./bin/set-cdn-prefix && bin/boot
+EOF

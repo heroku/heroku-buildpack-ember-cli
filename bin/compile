@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+set -o errexit    # always exit on error
+set -o pipefail   # don't ignore exit codes when piping output
+set -o nounset    # fail on unset variables
+
+### Configure directories
+
+BUILD_DIR=${1:-}
+ENV_DIR=${3:-}
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+
+export_env_dir() {
+  whitelist_regex=${2:-''}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$ENV_DIR" ]; then
+    for e in $(ls $ENV_DIR); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $ENV_DIR/$e)"
+      :
+    done
+  fi
+}
+
+echo "-----> Exporting ENV variables"
+export_env_dir
+
+echo "-----> Copying scripts to application slug"
+mkdir -p $BUILD_DIR/bin
+cp $BP_DIR/scripts/rewrite-index-meta $BUILD_DIR/bin/rewrite-index-meta
+cp $BP_DIR/scripts/set-cdn-prefix $BUILD_DIR/bin/set-cdn-prefix
+
+echo "-----> Copying static.json to application slug"
+cp $BP_DIR/scripts/static.json $BUILD_DIR/static.json
+
+echo "-----> Installing Bower package manager"
+cd $BUILD_DIR
+npm install bower
+
+echo '-----> Installing Bower dependencies'
+bower install
+
+# Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
+echo "-----> Running Ember CLI Build"
+SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
+
+echo "-----> Installing dependencies for CDN prepend rewriting"
+npm install replace
