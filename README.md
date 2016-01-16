@@ -17,8 +17,8 @@ Rather than duplicating code, heroku-buildpack-ember-cli-env builds on top of ot
 Here's a quick cheatsheet for adding the required buildpacks to your application; simply copy and paste the following:
 ```sh
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-nodejs
-heroku buildpacks:add https://github.com/hone/heroku-buildpack-static
 heroku buildpacks:add https://github.com/jmonster/heroku-buildpack-ember-cli-env
+heroku buildpacks:add https://github.com/hone/heroku-buildpack-static
 ```
 
 By default, the nodejs buildpack only installed `dependencies` and not `devDependencies`. And by default, Ember CLI puts everything in `devDependencies`. Doh! Fortunately, there's a simple fix:
