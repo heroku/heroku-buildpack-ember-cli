@@ -4,5 +4,5 @@
 if [ -f $1/ember-cli-build.js ]; then
   echo "Ember CLI" && exit 0
 else
-  echo "no" && exit 1
+  echo "No Ember CLI app detected" && exit 1
 fi
