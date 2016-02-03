@@ -1,0 +1,20 @@
+{
+  "name":"ember-cli-sample-app",
+  "description":"ember-cli sample application",
+  "repository": "https://github.com/heroku/heroku-buildpack-ember-cli",
+  "logo": "http://emberjs.com/images/logos/ember-logo.png",
+  "keywords": ["heroku", "buildpack", "heroku-buildpack", "ember", "ember.js", "ember-cli"],
+  "env": {
+    "EMBER_ENV": {
+      "description": "Environment desired for ember-cli builds",
+      "value": "production"
+    },
+    "NODE_ENV": "production",
+    "NPM_CONFIG_PRODUCTION":"false"
+  },
+  "buildpacks": [
+    { "url": "https://github.com/heroku/heroku-buildpack-nodejs" },
+    { "url": "https://github.com/heroku/heroku-buildpack-ember-cli" },
+    { "url": "https://github.com/hone/heroku-buildpack-static" }
+  ]
+}
