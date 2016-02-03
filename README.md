@@ -1,6 +1,6 @@
 # heroku-buildpack-ember-cli
 
-heroku-buildpack-ember-cli-env enables you to run your Ember CLI application on Heroku. It provides support for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
+heroku-buildpack-ember-cli enables you to run your Ember CLI application on Heroku. It provides support for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
 + builds the Ember application for production
 + automatically provides a properly configured `static.json` file to drive [heroku-buildpack-static](https://github.com/hone/heroku-buildpack-static)
 + provides caching headers for your `/assets` folder
@@ -11,7 +11,7 @@ heroku-buildpack-ember-cli-env enables you to run your Ember CLI application on 
 + If you don't already have the Heroku CLI installed, go ahead and [fetch it from https://toolbelt.heroku.com](https://toolbelt.heroku.com).
 + Your application's config must contain `storeConfigInMeta: true` (which is also the default value).
 
-Rather than duplicating code, heroku-buildpack-ember-cli-env builds on top of other buildpacks, namely [heroku-buildpack-nodejs](https://github.com/heroku/heroku-buildpack-nodejs) for [node.js](https://nodejs.org/en/) support as well as [heroku-buildpack-static](https://github.com/hone/heroku-buildpack-static) to actually serve the assets to your user's. If you need support for private dependencies, check out [heroku-buildpack-github-netrc](https://github.com/timshadel/heroku-buildpack-github-netrc).
+Rather than duplicating code, heroku-buildpack-ember-cli-env builds on top of other buildpacks, namely [heroku-buildpack-nodejs](https://github.com/heroku/heroku-buildpack-nodejs) for [node.js](https://nodejs.org/en/) support as well as [heroku-buildpack-static](https://github.com/hone/heroku-buildpack-static) to actually serve the assets to your users. If you need support for private dependencies, check out [heroku-buildpack-github-netrc](https://github.com/timshadel/heroku-buildpack-github-netrc).
 
 Here's a quick cheatsheet for adding the required buildpacks to your application; simply copy and paste the following:
 ```sh
