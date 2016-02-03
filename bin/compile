@@ -33,7 +33,7 @@ cp $BP_DIR/scripts/set-cdn-prefix $BUILD_DIR/bin/set-cdn-prefix
 cp $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
 
 echo "-----> Copying static.json to application slug"
-cp $BP_DIR/scripts/static.json $BUILD_DIR/static.json
+cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
 
 echo "-----> Installing Bower package manager"
 cd $BUILD_DIR
