@@ -30,7 +30,7 @@ echo "-----> Copying scripts to application slug"
 mkdir -p $BUILD_DIR/bin
 cp $BP_DIR/scripts/rewrite-index-meta $BUILD_DIR/bin/rewrite-index-meta
 cp $BP_DIR/scripts/set-cdn-prefix $BUILD_DIR/bin/set-cdn-prefix
-cp $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
+cp -n $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
 
 echo "-----> Copying static.json to application slug"
 cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
