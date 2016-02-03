@@ -1,4 +1,4 @@
-# heroku-buildpack-ember-cli-env
+# heroku-buildpack-ember-cli
 
 heroku-buildpack-ember-cli-env enables you to run your Ember CLI application on Heroku. It provides support for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
 + builds the Ember application for production
