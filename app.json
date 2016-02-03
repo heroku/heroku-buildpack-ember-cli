@@ -1,7 +1,7 @@
 {
   "name":"ember-cli-sample-app",
   "description":"ember-cli sample application",
-  "repository": "https://github.com/heroku/heroku-buildpack-ember-cli",
+  "repository": "https://github.com/heroku/heroku-static-ember",
   "logo": "http://emberjs.com/images/logos/ember-logo.png",
   "keywords": ["heroku", "buildpack", "heroku-buildpack", "ember", "ember.js", "ember-cli"],
   "env": {
