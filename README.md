@@ -47,4 +47,4 @@ fingerprint: {
 ```
 
 ## Example
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/jmonster/heroku-buildpack-ember-cli-env)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/heroku/heroku-buildpack-ember-cli)
