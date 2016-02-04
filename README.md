@@ -35,16 +35,5 @@ If your project includes an `app.json` file (used by Heroku for Pipelines and He
 ## static.json
 This buildpack injects a default [static.json](https://github.com/hone/heroku-buildpack-static#configuration) file into the application slug *unless one is provided by your application*. **Warning** The provided `static.json` sets cache headers on `/assets/**` which is only desirable _if_ you are leveraging [fingerprinting](http://ember-cli.com/asset-compilation/#fingerprinting-and-cdn-urls) in your project!
 
-## CDN support
-It's best to serve everything that's been fingerprinted from a CDN. Out of the box, your CDN variable won't play nicely with static applications since they are only built when changes are pushed to Heroku **but not when changing an environment variable or promoting an application from Staging to Production via Pipelines**. As a result, it can be difficult to set a different CDN prefix across multiple instances of your application or to modify it after deploying. To mitigate this, we expose the environment variable `CDN_HOST`. This variable should contain the CDN prefix you'd like to employ in your application. It should be the value you'd normally set in your project's `ember-cli-build.js` file.
-
-To make this possible, you'll need to specify a special value in the actual `ember-cli-build.js` file; it should resemble the following:
-
-```js
-fingerprint: {
-  prepend: 'THISISAPLACEHOLDERFORTHECDNHOSTVALUE'
-}
-```
-
 ## Example Application
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/heroku/heroku-static-ember)
