@@ -1,6 +1,6 @@
-# heroku-buildpack-ember-cli
+# heroku-buildpack-ember-cli _beta_
 
-heroku-buildpack-ember-cli enables you to run your Ember CLI application on Heroku. It provides support for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
+**heroku-buildpack-ember-cli** enables you to run your Ember CLI application on Heroku. It provides the ability for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
 + builds the Ember application for production
 + automatically provides a properly configured `static.json` file to drive [heroku-buildpack-static](https://github.com/hone/heroku-buildpack-static)
 + provides caching headers for your `/assets` folder
