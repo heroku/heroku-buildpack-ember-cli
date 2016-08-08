@@ -56,7 +56,25 @@ fi
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
-SKIP_DEPENDENCY_CHECKER=true $BUILD_DIR/node_modules/ember-cli/bin/ember build --environment=production
+# Make build cache directory.
+# Unfortunately a "private" API:
+# https://github.com/stefanpenner/broccoli-persistent-filter/blob/f862807b9622195dcb042696900b927b9624fbf7/lib/strategies/persistent.js#L16
+START_TIME=$SECONDS
+USE_BROCCOLI_CACHE=${USE_BROCCOLI_CACHE:-}
+if [[ -z "$USE_BROCCOLI_CACHE" ]]; then
+SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
+else
+CACHE_DIR=$2
+BROCCOLI_CACHE_DIR="${CACHE_DIR}/broccoli"
+mkdir -p BROCCOLI_CACHE_DIR
+echo "USE_BROCCOLI_CACHE"
+echo "BROCCOLI_PERSISTENT_FILTER_CACHE_ROOT=$BROCCOLI_CACHE_DIR SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production"
+BROCCOLI_PERSISTENT_FILTER_CACHE_ROOT=$BROCCOLI_CACHE_DIR SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
+fi
+ELAPSED_TIME=$(($SECONDS - $START_TIME))
+
+echo "-----> Build time ${ELAPSED_TIME}"
+
 
 if [ -f $BUILD_DIR/node_modules/replace/package.json ]; then
   echo "-----> CDN prepend rewriting dep already found, skipping"
