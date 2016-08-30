@@ -10,7 +10,7 @@
       "Cache-Control": "private, no-store, no-cache, must-revalidate, proxy-revalidate",
       "Pragma": "no-cache",
       "Expires": "Sat, 05 Nov 1955 00:00:00 PST",
-      "Strict-Transport-Security": "max-age=86400; includeSubDomains;",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains;",
       "X-Download-Options": "noopen",
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "SAMEORIGIN",
