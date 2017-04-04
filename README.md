@@ -1,4 +1,6 @@
-# heroku-buildpack-ember-cli _beta_
+# heroku-buildpack-ember-cli
+
+**NOTE**: This is not an officially supported Heroku buildpack.  It is used by the Heroku Dashboard and provided as open source for transparency. Use at your own risk.
 
 **heroku-buildpack-ember-cli** enables you to run your Ember CLI application on Heroku. It provides the ability for changing ENV variables on-the-fly without modifying your codebase or redeploying your application. Primary features of this buildpack include:
 + builds the Ember application for production
