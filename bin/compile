@@ -10,6 +10,11 @@ set -o nounset    # fail on unset variables
 BUILD_DIR=${1:-}
 ENV_DIR=${3:-}
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+BOWER_BIN="./node_modules/.bin/bower"
+HAS_YARN_LOCK="false"
+if [ -f "$BUILD_DIR/yarn.lock" ]; then
+  HAS_YARN_LOCK="true"
+fi
 
 export_env_dir() {
   whitelist_regex=${2:-''}
@@ -35,16 +40,43 @@ cp -n $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
 echo "-----> Copying static.json to application slug"
 cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
 
-echo "-----> Installing Bower package manager"
 cd $BUILD_DIR
-npm install bower
 
-echo '-----> Installing Bower dependencies'
-bower install
+if [ -d "./bower_components" ]; then
+  echo "-----> Relying on cached bower_components"
+else
+  if [ -x $BOWER_BIN ]; then
+    echo "-----> Using bower from package.json"
+  else
+    if [ "$HAS_YARN_LOCK" == "true" ]; then
+      echo "-----> Installing Bower (via yarn)"
+      yarn add bower
+    else
+      echo "-----> Installing Bower (via npm)"
+      npm install bower
+    fi
+  fi
+
+  echo "-----> Installing dependencies defined in bower.json"
+
+  $BOWER_BIN install
+  BOWER_EXIT_CODE=$?
+
+  if [ $BOWER_EXIT_CODE -ne 0 ]
+  then
+    echo "-----> Bower installation failed, aborting Ember CLI Build"
+    exit $BOWER_EXIT_CODE
+  fi
+fi
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
 SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
 
-echo "-----> Installing dependencies for CDN prepend rewriting"
-npm install replace
+if [ "$HAS_YARN_LOCK" == "true" ]; then
+  echo "-----> Installing dependencies for CDN prepend rewriting (via yarn)"
+  yarn add replace
+else
+  echo "-----> Installing dependencies for CDN prepend rewriting (via npm)"
+  npm install replace
+fi

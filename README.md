@@ -39,3 +39,18 @@ This buildpack injects a default [static.json](https://github.com/hone/heroku-bu
 
 ## Example Application
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/heroku/heroku-static-ember)
+
+## Bower
+For optimal performance, add the following (or similar) to your project's `package.json`:
+```js
+"postinstall": "bower install"
+```
+
+and ensure `bower` is included your `package.json`'s `dependencies`:
+```js
+"dependencies": {
+  "bower": "*"
+}
+```
+
+This allows the nodejs buildpack to cache `bower_components`  yielding faster build times 🙌
