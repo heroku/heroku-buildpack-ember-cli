@@ -35,16 +35,33 @@ cp -n $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
 echo "-----> Copying static.json to application slug"
 cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
 
-echo "-----> Installing Bower package manager"
 cd $BUILD_DIR
-npm install bower
 
-echo '-----> Installing Bower dependencies'
-bower install
+if [ -d "./bower_components" ]; then
+  echo "-----> Relying on cached bower_components"
+else
+  if [ -x $BOWER_BIN ]; then
+    echo "-----> Using bower from package.json"
+  else
+    echo "-----> Installing Bower"
+    npm install --ignore-scripts bower
+  fi
+
+  echo "-----> Installing dependencies defined in bower.json"
+
+  bower install
+  BOWER_EXIT_CODE=$?
+
+  if [ $BOWER_EXIT_CODE -ne 0 ]
+  then
+    echo "-----> Bower installation failed, aborting Ember CLI Build"
+    exit $BOWER_EXIT_CODE
+  fi
+fi
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
 SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
 
 echo "-----> Installing dependencies for CDN prepend rewriting"
-npm install replace
+npm install --ignore-scripts replace
