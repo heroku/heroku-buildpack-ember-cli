@@ -7,6 +7,7 @@
 + automatically provides a properly configured `static.json` file to drive [heroku-buildpack-static](https://github.com/hone/heroku-buildpack-static)
 + provides caching headers for your `/assets` folder
 + regenerates your application's configuration each time an environment variable is changed on Heroku
+  + but this doesn't pull in any addons' `environment.js` files. See [this issue](https://github.com/heroku/heroku-buildpack-ember-cli/issues/18)
 + updates your application's asset prefix each time the `CDN_HOST` variable is changed on Heroku
 
 ## dependencies
