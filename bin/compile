@@ -44,7 +44,10 @@ cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
-cat $BUILD_DIR/node_modules/.bin/ember
+echo $NODE_PATH
+echo "process"
+echo process.env.NODE_PATH
+echo process.env.EMBER_NODE_PATH
 SKIP_DEPENDENCY_CHECKER=true $BUILD_DIR/node_modules/.bin/ember build --environment=production
 
 echo "-----> Installing dependencies for CDN prepend rewriting"
