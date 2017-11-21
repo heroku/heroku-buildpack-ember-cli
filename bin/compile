@@ -44,7 +44,7 @@ bower install
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
-SKIP_DEPENDENCY_CHECKER=true ./node_modules/.bin/ember build --environment=production
+SKIP_DEPENDENCY_CHECKER=true $BUILD_DIR/node_modules/.bin/ember build --environment=production
 
 echo "-----> Installing dependencies for CDN prepend rewriting"
 npm install replace
