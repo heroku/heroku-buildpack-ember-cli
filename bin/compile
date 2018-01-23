@@ -35,12 +35,17 @@ cp -n $BP_DIR/scripts/Procfile $BUILD_DIR/Procfile
 echo "-----> Copying static.json to application slug"
 cp -n $BP_DIR/scripts/static.json $BUILD_DIR/static.json
 
-echo "-----> Installing Bower package manager"
 cd $BUILD_DIR
-npm install bower
 
-echo '-----> Installing Bower dependencies'
-bower install
+if [ -f $1/bower.json ]; then
+  echo "-----> Installing Bower package manager"
+  npm install bower
+
+  echo '-----> Installing Bower dependencies'
+  bower install
+else
+  echo '-----> bower.json not detected, skipping'
+fi
 
 # Skip dependency checking because it'll fail when devDependencies are missing (e.g. testing dependencies)
 echo "-----> Running Ember CLI Build"
