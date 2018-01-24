@@ -11,6 +11,8 @@ BUILD_DIR=${1:-}
 ENV_DIR=${3:-}
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 
+[ -f $BUILD_DIR/yarn.lock ] && use_yarn=true || use_yarn=false
+
 export_env_dir() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
@@ -39,7 +41,12 @@ cd $BUILD_DIR
 
 if [ -f $1/bower.json ]; then
   echo "-----> Installing Bower package manager"
-  npm install bower
+
+  if $use_yarn; then
+    yarn add bower --no-lockfile
+  else
+    npm install bower
+  fi
 
   echo '-----> Installing Bower dependencies'
   bower install
@@ -51,5 +58,13 @@ fi
 echo "-----> Running Ember CLI Build"
 SKIP_DEPENDENCY_CHECKER=true $BUILD_DIR/node_modules/ember-cli/bin/ember build --environment=production
 
-echo "-----> Installing dependencies for CDN prepend rewriting"
-npm install replace
+if [ -f $BUILD_DIR/node_modules/replace/package.json ]; then
+  echo "-----> CDN prepend rewriting dep already found, skipping"
+else
+  echo "-----> Installing dependencies for CDN prepend rewriting"
+  if $use_yarn; then
+    yarn add replace --no-lockfile
+  else
+    npm install replace
+  fi
+fi
